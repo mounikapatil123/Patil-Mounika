@@ -1,0 +1,44 @@
+REPLECA SET:
+
+
+Q)Write a common use-case, where you will use a daemon set instead of replica set?
+
+Answer:-
+
+Scenario:
+A company needs to deploy a log collection agent on every node in their Kubernetes cluster to ensure all logs from various applications and system components are collected and sent to a central logging system.
+
+Steps:
+
+Requirement Analysis:
+The log collection agent needs to run on every node.
+Ensure there is no need for load balancing or scaling beyond one agent per node.
+
+Choosing DaemonSet over ReplicaSet:
+DaemonSet: Ensures that a copy of the pod is running on each node in the cluster.
+ReplicaSet: Ensures a specified number of pod replicas are running at any time, without node-specific guarantees.
+
+Creating the DaemonSet Configuration:
+Define a DaemonSet YAML file specifying the log collection agent container and its configurations.
+Include necessary configurations such as image, ports, volumes, and environment variables.
+
+Deployment:
+
+Apply the DaemonSet configuration using 
+->kubectl apply -f <daemonset.yaml>.
+
+Kubernetes ensures that the log collection agent pod is scheduled on each existing node and any new node that joins the cluster.
+
+Verification:
+By Using-> kubectl get daemonset to verify that the DaemonSet is created and running.
+
+Check the status of pods on each node by using 
+->kubectl get pods -o wide to confirm that the log collection agent is running on all nodes.
+
+Using a DaemonSet is appropriate in this use-case because it guarantees that the log collection agent runs on every node in the cluster, fulfilling the requirement for comprehensive log collection. A ReplicaSet would not ensure one pod per node, making DaemonSet the optimal choice.
+
+
+
+
+
+
