@@ -1,0 +1,43 @@
+VOTING-APP:
+
+1. cd $home 
+
+2. sudo su -
+
+3. kubectl delete all --all
+
+4. git clone https://github.com/ashishrpandey/example-voting-app
+
+5. cd  /root/example-voting-app/k8s-specifications
+
+6. kubectl apply -f .
+
+7. kubectl get all 
+
+8. For voting and result pods, NodePort is assigned, because other persons needs to vote
+
+9. After that with the help of public IP and port we cast votes and observed the results in result page
+
+10. After Deleting Voting Pod
+- Frontend: No changes observed; all votes intact.
+- Unix: Voting pod is deleted. A new voting pod is spawned with another IP address and running with no disturbance.
+
+11. After Deleting Worker Pod
+- Frontend: No changes observed; all votes intact.
+- Unix: Worker pod is deleted. A new worker pod is spawned with another IP address and running with no disturbance.
+
+12. After Deleting DB Pod
+- Frontend: As votes are stored in the DB, the casted votes are deleted
+- Unix: DB pod is deleted. A new DB pod is spawned and running with zero votes.
+
+13. Why Result App Stopped Working?
+- Because the data is fetched from the DB and it loses the connection with DB, so it stopped the result app to work.
+
+14. How I Made the Result Pod Work
+- Made the DB pod to up and running, and casted the votes again then it is working.
+
+15. I learnt so many things from this training mainly
+- Docker containerisation
+- K8s architecture and services
+- Helm
+- Ingression etc
