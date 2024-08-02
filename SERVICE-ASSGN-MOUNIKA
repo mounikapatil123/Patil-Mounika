@@ -1,0 +1,59 @@
+SERVICE:
+
+Q)You have deployed an application, that is listening at port 8000. You used a replica-set to deploy it and created a NodePort service to make it accessible. But when you test it, somehow the application is not reachable at the port. Write down your approach and sequentially all the steps that you will take to find out the issue?
+
+Answer:-
+
+Verify Pod Status:
+
+Ensure that all the pods are running and healthy.
+
+->kubectl get pods
+
+Check Pod Logs:
+Look at the logs of the pods to see if there are any errors or issues.
+
+->kubectl logs <pod-name>
+
+Describe the Pod:
+Get detailed information about the pod to check for any issues with its configuration or status.
+
+->kubectl describe pod <pod-name>
+
+Verify ReplicaSet Status:
+Check if the ReplicaSet is correctly managing the desired number of pods.
+
+->kubectl get rs
+->kubectl describe rs <replica-set-name>
+
+Verify Service Configuration:
+Ensure that the NodePort service is correctly configured and pointing to the correct pods.
+
+->kubectl get svc
+->kubectl describe svc <service-name>
+
+Check NodePort Allocation:
+Verify the NodePort range and ensure the allocated port is within the allowed range.
+
+->kubectl get svc <service-name> -o yaml | grep nodePort
+
+Test NodePort Connectivity:
+Test the connectivity to the NodePort from within the cluster.
+
+->curl http://<node-ip>:<node-port>
+
+Check Firewall Rules:
+Ensure that firewall rules on the nodes are not blocking the NodePort.
+
+->sudo iptables -L | grep <node-port>
+
+Verify Application Listening Port:
+Ensure that the application inside the pod is listening on the correct port (8000).
+
+->kubectl exec -it <pod-name> -- netstat -tuln | grep 8000
+
+Check Service Endpoints:
+Ensure that the endpoints for the service are correctly populated.
+
+->kubectl get endpoints
+->kubectl describe endpoints <service-name>
