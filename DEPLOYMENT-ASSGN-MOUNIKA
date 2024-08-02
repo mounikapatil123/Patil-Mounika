@@ -1,0 +1,35 @@
+DEPLOYMENT:
+
+
+
+
+Q)Suppose you have deployed your application using a deployment controller. Assume the initial number of replicas is one. Write the steps needed to update a container's image using deployment, making sure that there is zero downtime?
+
+Answer:-
+
+approach to update a container’s image in a deployment with zero downtime:
+
+Scale Up the Deployment:
+First, increase the number of replicas to ensure there is more than one instance running. This helps maintain availability during the update.
+
+->kubectl scale deployment my-deployment --replicas=2
+
+Update the Deployment Image:
+
+Update the deployment to use the new container image.
+
+->kubectl set image deployment/my-deployment my-container=my-new-image:latest
+
+Monitor the Update:
+
+Check the status of the deployment to ensure the update is progressing smoothly.
+
+->kubectl rollout status deployment/my-deployment
+
+Scale Down the Deployment:
+
+Once the update is complete and the new pods are running successfully, scale the deployment back to the original number of replicas.
+
+->kubectl scale deployment my-deployment --replicas=1
+
+By scaling up the deployment before updating the image,  ensure that there is always at least one pod running the application, thus achieving zero downtime.
